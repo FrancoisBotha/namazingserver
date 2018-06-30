@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<div th:fragment="menu">
+
+    <ul class="nav nav-tabs">
+        <li class="nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/admin/vendors' ? 'active':''}"><a th:href="@{/admin/vendors}"><span>Vendors</span></a></li>
+        <li class="nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/admin/vendormenu' ? 'active':''}"><a th:href="@{/admin/vendormenu}"><span>Menu</span></a></li>
+        <li class="nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/admin/vendorspecial' ? 'active':''}"><a th:href="@{/admin/vendorspecial}"><span>Specials</span></a></li>
+    </ul>
+
+</div>
+
+
+
+</body>
+
+</html>
