@@ -9,10 +9,59 @@
 <div class="container">
 
     <div th:include="navbar:: navbar"></div>
-    <br></br>
     <hr></hr>
     <br></br>
-    <div>New Vendor</div>
+
+    <div class="row">
+
+        <div class="col-md-5">
+
+            <div class="well">
+
+               <div class="text-left">
+
+                   <h4 class="display-6">Create new vendor</h4>
+
+                   <form id="newvendorform"
+                         th:action="@{/admin/vendor/new}"
+                         th:object="${vendor}"
+                         method="post"
+                         enctype="multipart/form-data"
+                         >
+
+                       <div class="row">
+                           <div class="col-md-4">
+                               <div class="form-group">
+                                   <label for="vendorCde">Vendor Code</label>
+                                   <input type="text" id="vendorCde" name="vendorCde" class="form-control"/>
+                               </div>
+                           </div>
+                       </div>
+
+                       <div class="form-group">
+                           <label for="vendorName">Vendor Name</label>
+                           <input type="text" id="vendorName" name="vendorName" class="form-control"/>
+                       </div>
+
+                       <div class="form-group">
+                           <label for="file">File</label>
+                           <input type="file" id="file" name="file" class="form-control"/>
+                       </div>
+
+                       <div class="form-group">
+                           <button type="submit" class="btn btn-success">Save</button>
+                           <a type="button" class="btn btn-primary" href="/admin/vendor">Cancel</a>
+                       </div>
+
+                   </form>
+
+               </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
