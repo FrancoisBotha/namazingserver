@@ -1,5 +1,8 @@
 package io.francoisbotha.namazingserver.controller;
 
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
+import io.francoisbotha.namazingserver.domain.dao.VendorRepository;
+import io.francoisbotha.namazingserver.domain.model.Vendor;
 import io.francoisbotha.namazingserver.services.S3Service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -22,6 +26,12 @@ public class VendorController {
 
     @Autowired
     S3Service s3Service;
+
+    @Autowired
+    private AmazonDynamoDB amazonDynamoDB;
+
+    @Autowired
+    VendorRepository repository;
 
     private static final String VENDOR_VIEW_NAME = "Vendors";
     private static final String NEW_VENDOR_VIEW_NAME = "Vendor_new";
@@ -49,6 +59,15 @@ public class VendorController {
                              ModelMap model) {
 
         log.debug(vendorDto.getVendorCde());
+
+        Vendor vendor = new Vendor();
+        vendor.setVendorCde(vendorDto.getVendorCde());
+        vendor.setVendorName(vendorDto.getVendorName());
+        repository.save(vendor);
+
+        List<Vendor> result = (List<Vendor>) repository.findAll();
+
+        log.debug(result.toString());
 
         if (file != null && !file.isEmpty()) {
             log.debug("In file block");
