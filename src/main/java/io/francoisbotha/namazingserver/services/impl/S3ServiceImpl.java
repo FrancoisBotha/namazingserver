@@ -36,7 +36,7 @@ public class S3ServiceImpl implements S3Service {
     @Autowired
     private AmazonS3 s3client;
 
-    @Value("${s3.bucket}")
+    @Value("${aws.s3.bucket}")
     private String bucketName;
 
     @Value("${image.store.tmp.folder}")

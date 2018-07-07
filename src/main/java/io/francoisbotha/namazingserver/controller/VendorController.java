@@ -3,7 +3,6 @@ package io.francoisbotha.namazingserver.controller;
 import io.francoisbotha.namazingserver.services.S3Service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -24,12 +23,6 @@ public class VendorController {
     @Autowired
     S3Service s3Service;
 
-    @Value("${jsa.s3.uploadfile}")
-    private String uploadFilePath;
-
-    @Value("${jsa.s3.key}")
-    private String downloadKey;
-
     private static final String VENDOR_VIEW_NAME = "Vendors";
     private static final String NEW_VENDOR_VIEW_NAME = "Vendor_new";
 
@@ -37,12 +30,10 @@ public class VendorController {
     public static final String VENDOR_MODEL_KEY = "vendor";
 
     @RequestMapping(value = "/admin/vendor", method = RequestMethod.GET)
-
     public String ShowVendorPage(Model model) {
 
         return VendorController.VENDOR_VIEW_NAME;
     }
-
 
     @RequestMapping(value = "/admin/vendor/new", method = RequestMethod.GET)
     public String ShowVendorNEwPage(ModelMap model) {
@@ -56,28 +47,19 @@ public class VendorController {
     public String VendorPost(@RequestParam(name = "file", required = false) MultipartFile file,
                              @ModelAttribute(VENDOR_MODEL_KEY) @Valid VendorDto vendorDto,
                              ModelMap model) {
+
         log.debug(vendorDto.getVendorCde());
-        log.info("In Post Method");
 
         if (file != null && !file.isEmpty()) {
-            log.info("In file block");
+            log.debug("In file block");
             String vendorImageUrl = s3Service.storeProfileImage(file, vendorDto.getVendorCde());
             if (vendorImageUrl != null) {
-                log.info("update image");
+                log.debug("update image");
             } else {
-                log.info("Could not upload file to S3");
+                log.debug("Could not upload file to S3");
             }
         }
-//
-//        System.out.println("---------------- START UPLOAD FILE ----------------");
-//        s3Service.uploadFile("jsa-s3-upload-file.txt", uploadFilePath);
-//        System.out.println("---------------- START DOWNLOAD FILE ----------------");
-//        s3Service.downloadFile(downloadKey);
-
-
-
         return VendorController.VENDOR_VIEW_NAME;
     }
 
 }
-
