@@ -11,19 +11,17 @@ import lombok.*;
 @ToString
 @EqualsAndHashCode
 @NoArgsConstructor
-public class VendorDto {
+public class MenuDto {
 
     private String id;
-    private Integer vendorNo;
-
-    @NotBlank
-    @Size(min = 6, max = 6)
-    private String vendorCde;
+    private Integer menuNo;
 
     @NotBlank
     @Size(min = 3, max = 50)
-    private String vendorName;
+    private String menuName;
 
-    private String vendorLogoUrl;
+    private String menuImgUrl;
+
+    private String menuDesc;
 
 }

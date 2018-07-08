@@ -2,30 +2,63 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 
-<head th:include="header :: header"></head>
+<head th:include="fragments/header :: header"></head>
 
 <body>
 
 <div class="container">
 
-    <div th:include="navbar:: navbar"></div>
-    <hr></hr>
-    <br></br>
+    <div th:include="fragments/navbar:: navbar"></div>
+
+    <div class="row mt-2">
+        <div class="col-md-4">
+            <h4 class="display-7 text-left" th:text="'View Vendor: ' + ${vendor.vendorName}">Vendor: </h4>
+        </div>
+    </div>
+
+    <a th:href="@{/admin/vendor}" class="btn btn-outline-dark btn-sm mt-0" role="button">Back</a>
 
     <div class="row">
+        <div class="col-md-8 mt-2">
+            <img align="left"
+                 height="60"
+                 width="120"
+                 th:src="${vendor.vendorLogoUrl}"
+                 class="img-circle"/>
+        </div>
+    </div>
 
-        <div class="col-md-5">
-
-            <div class="well">
-
-                <div class="text-left">
-
-                    <span><h4 class="display-6">Vendor:</h4></span><span th:text="${vendor.vendorName}"></span>
-
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card card-body bg-light mt-2 mb-2">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h6 class="display-7 text-right">Vendor:</h6>
+                    </div>
+                    <div class="col-md-4 display-7" th:text="${vendor.vendorName}">
+                        Text
+                    </div>
                 </div>
-
+                <div class="row">
+                    <div class="col-md-4">
+                        <h6 class="display-7 text-right">Code:</h6>
+                    </div>
+                    <div class="col-md-4" th:text="${vendor.vendorCde}">
+                        Text
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h6 class="display-7 text-right">No:</h6>
+                    </div>
+                    <div class="col-md-4" th:text="${vendor.vendorNo}">
+                        Text
+                    </div>
+                </div>
             </div>
-
+            <a th:href="@{/admin/vendor}" class="btn btn-outline-dark btn-sm mt-0" role="button">Modify</a>
+            <a th:href="@{|/admin/menu/${vendor.id}|}" class="btn btn-outline-dark btn-sm mt-0" role="button">Menu</a>
+            <a th:href="@{|/admin/special/${vendor.id}|}" class="btn btn-outline-dark btn-sm mt-0" role="button">Specials</a>
         </div>
 
     </div>

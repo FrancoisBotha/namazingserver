@@ -2,26 +2,19 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 
-<head th:include="header :: header"></head>
+<head th:include="fragments/header :: header"></head>
 
 <body>
 
 <div class="container">
 
-    <div th:include="navbar:: navbar"></div>
-    <hr></hr>
-    <br></br>
+    <div th:include="fragments/navbar:: navbar"></div>
 
-    <div class="row">
-
+    <div class="row mt-2">
         <div class="col-md-5">
-
             <div class="well">
-
                <div class="text-left">
-
                    <h4 class="display-6">Create new vendor</h4>
-
                    <form id="newvendorform"
                          th:action="@{/admin/vendor/new}"
                          th:object="${vendor}"

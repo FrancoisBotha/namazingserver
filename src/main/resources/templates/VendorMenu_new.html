@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments/header :: header"></head>
+
+<body>
+
+<div class="container">
+
+    <div th:include="fragments/navbar:: navbar"></div>
+
+    <div class="row mt-2">
+        <div class="col-md-5">
+            <div class="well">
+                <div class="text-left">
+                    <h4 class="display-6">Create new menu entry</h4>
+
+                    <form id="newvendorform"
+                          th:action="@{/admin/menu/new}"
+                          th:object="${menu}"
+                          method="post"
+                          enctype="multipart/form-data"
+                    >
+
+                        <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                            <p th:text="#{form.newmenu.hasErrors}">Error Message</p>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group" th:class="${#fields.hasErrors('vendorNo')} ? 'form-group has-error' : 'form-group'">
+                                    <label for="menuNo" th:text="#{menu.menuNo}">vendorCde</label>
+                                    <input type="text" id="menuNo" name="menuNo" class="form-control" th:field="*{menuNo}" th:errorclass="is-invalid"/>
+                                    <div class="invalid-feedback"  th:if="${#fields.hasErrors('menuNo')}">
+                                        <ul >
+                                            <li  th:each="err : ${#fields.errors('menuNo')}" th:text="${err}" />
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="form-group" th:class="${#fields.hasErrors('menuName')} ? 'form-group has-error' : 'form-group'">
+                                    <label for="menuName" th:text="#{menu.menuName}">menuCde</label>
+                                    <input type="text" id="menuName" name="menuName" class="form-control" th:field="*{menuName}" th:errorclass="is-invalid"/>
+                                    <div class="invalid-feedback"  th:if="${#fields.hasErrors('menuName')}">
+                                        <ul>
+                                            <li  th:each="err : ${#fields.errors('vendorName')}" th:text="${err}" />
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group" th:class="${#fields.hasErrors('menuDesc')} ? 'form-group has-error' : 'form-group'">
+                                    <label for="menuDesc" th:text="#{menu.menuDesc}">menuCde</label>
+                                    <input type="text" id="vendorCde" name="vendorCde" class="form-control" th:field="*{menuDesc}" th:errorclass="is-invalid"/>
+                                    <div class="invalid-feedback"  th:if="${#fields.hasErrors('menuDesc')}">
+                                        <ul >
+                                            <li  th:each="err : ${#fields.errors('menuDesc')}" th:text="${err}" />
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="file" th:text="#{menu.menuImgUrl}">File</label>
+                            <input type="file" id="file" name="file" class="form-control"/>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success">Save</button>
+                            <a type="button" class="btn btn-primary" href="/admin/menu/">Cancel</a>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+</html>

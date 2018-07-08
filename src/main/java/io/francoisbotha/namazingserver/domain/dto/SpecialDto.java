@@ -11,19 +11,16 @@ import lombok.*;
 @ToString
 @EqualsAndHashCode
 @NoArgsConstructor
-public class VendorDto {
+public class SpecialDto {
 
     private String id;
-    private Integer vendorNo;
-
-    @NotBlank
-    @Size(min = 6, max = 6)
-    private String vendorCde;
+    private Integer specialNo;
 
     @NotBlank
     @Size(min = 3, max = 50)
-    private String vendorName;
+    private String specialName;
 
-    private String vendorLogoUrl;
+    private String specialLogoUrl;
 
+    private String specialDesc;
 }

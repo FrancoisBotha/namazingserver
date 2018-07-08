@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Controller
@@ -53,9 +54,22 @@ public class VendorController {
     public String ViewVendor(Model model,
                                @PathVariable("id") String id) {
 
-        VendorDto vendorDto = new VendorDto();
-        vendorDto.setVendorName("Some Vendor");
-        model.addAttribute(VendorController.VENDOR_MODEL_KEY , vendorDto);
+        Optional<Vendor> vendorOptional = vendorRepository.findById(id);
+        if (vendorOptional.isPresent()){
+            Vendor vendor = vendorOptional.get();
+            VendorDto vendorDto = new VendorDto();
+
+            vendorDto.setId(vendor.getId());
+            vendorDto.setVendorNo(vendor.getVendorNo());
+            vendorDto.setVendorCde(vendor.getVendorCde());
+            vendorDto.setVendorName(vendor.getVendorName());
+            vendorDto.setVendorLogoUrl(vendor.getVendorLogoUrl());
+
+            model.addAttribute(VendorController.VENDOR_MODEL_KEY , vendorDto);
+
+            return VendorController.VIEW_VENDOR_VIEW_NAME;
+
+        }
 
         return VendorController.VIEW_VENDOR_VIEW_NAME;
     }
@@ -95,6 +109,7 @@ public class VendorController {
         Vendor vendor = new Vendor();
         vendor.setVendorCde(vendorDto.getVendorCde());
         vendor.setVendorName(vendorDto.getVendorName());
+        vendor.setVendorNo(vendorDto.getVendorNo());
 
         if (file != null && !file.isEmpty()) {
             log.debug("In file block");
@@ -109,7 +124,7 @@ public class VendorController {
 
         vendorRepository.save(vendor);
 
-        return VendorController.VENDOR_VIEW_NAME;
+        return "redirect:/admin/vendor";
     }
 
 }

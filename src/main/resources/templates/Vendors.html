@@ -2,34 +2,37 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
 
-<head th:include="header :: header"></head>
+<head th:include="fragments/header :: header"></head>
 
 <body>
 
 <div class="container">
 
-    <div th:include="navbar:: navbar"></div>
-    <div th:include="menu:: menu"></div>
-    <div class="mt-3"> <a th:href="@{/admin/vendor/new}">New</a></div>
-    <table class="table table-striped mt-2">
-        <thead class="thead-dark">
-            <tr scope="row" class="table-dark">
-                <th scope="col" class="table-dark"></th>
-                <th scope="col" class="table-dark">Vendor No</th>
-                <th scope="col" class="table-dark">Vendor Cde</th>
-                <th scope="col" class="table-dark">Vendor Name</th>
-                <th scope="col" class="table-dark"></th>
-                <th scope="col" class="table-dark"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr th:each="vendor : ${vendors}">
-                <td th:replace="fragments/vendortablerow :: vendortablerow"></td>
-            </tr>
-        </tbody>
-    </table>
-
-
+    <div th:include="fragments/navbar:: navbar"></div>
+    <div th:include="fragments/welcometext:: welcometext"></div>
+    <hr></hr>
+    <div class="mt-3"> <a th:href="@{/admin/vendor/new}">New Vendor</a></div>
+    <div class="row">
+        <div class="col-md-8">
+            <table class="table table-striped mt-2">
+                <thead class="thead-dark">
+                <tr scope="row" class="table-dark">
+                    <th scope="col" class="table-dark"></th>
+                    <th scope="col" class="table-dark">Vendor No</th>
+                    <th scope="col" class="table-dark">Vendor Cde</th>
+                    <th scope="col" class="table-dark">Vendor Name</th>
+                    <th scope="col" class="table-dark"></th>
+                    <th scope="col" class="table-dark"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="vendor : ${vendors}">
+                    <td th:replace="fragments/vendortablerow :: vendortablerow"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 
 <script src="/webjars/jquery/jquery.min.js"></script>
