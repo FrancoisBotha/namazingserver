@@ -10,13 +10,15 @@
                  width="40"
                  th:src="${vendor.vendorLogoUrl}"
                  class="img-circle"/></td>
-        <td th:text="${vendor.vendorNo}">Vendor No</td>
+        <td th:text="${vendor.num}">Vendor No</td>
         <td th:text="${vendor.vendorCde}">Vendor Cde</td>
         <td th:text="${vendor.vendorName}">Vendor Name</td>
         <td><a th:href="@{|/admin/vendor/view/${vendor.id}|}" class="btn btn-outline-dark btn-sm" role="button">View</a></td>
-        <td><a th:href="@{|/admin/vendor/delete/${vendor.id}|}" class="btn btn-outline-danger btn-sm" role="button">Delete</a></td>
+        <td><form id="delvendorform" th:action="@{|/admin/vendor/delete/${vendor.id}|}" th:object="${vendor}" method="POST">
+            <input type="hidden" name="_method" value="DELETE"/>
+            <input type="submit" class="btn btn-outline-danger btn-sm" value="Delete">
+            </form></td>
     </tr>
-
 
 </body>
 

@@ -20,7 +20,7 @@ public class SpecialDto {
     @Size(min = 3, max = 50)
     private String specialName;
 
-    private String specialLogoUrl;
+    private String specialImgUrl;
 
     private String specialDesc;
 }

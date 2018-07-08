@@ -42,8 +42,6 @@ public class S3ServiceImpl implements S3Service {
     @Value("${image.store.tmp.folder}")
     private String tempImageStore;
 
-    private static final String PROFILE_PICTURE_FILE_NAME = "profilePicture";
-
     @Override
     public void downloadFile(String keyName) {
 
@@ -120,11 +118,12 @@ public class S3ServiceImpl implements S3Service {
     /**
      * It stores the given file name in S3 and returns the key under which the file has been stored
      * @param uploadedFile The multipart file uploaed by the user
-     * @param username The username for which to upload this file
+     * @param folderName The folder for this file
+     * @param fileName The filename for this file
      * @return The URL of the uploaded image
      * @throws S3Exception If something goes wrong
      */
-    public String storeProfileImage(MultipartFile uploadedFile, String username)  {
+    public String storeImage(MultipartFile uploadedFile, String folderName, String fileName)  {
 
         String profileImageUrl = null;
 
@@ -133,7 +132,7 @@ public class S3ServiceImpl implements S3Service {
                 byte[] bytes = uploadedFile.getBytes();
 
                 // The root of our temporary assets. Will create if it doesn't exist
-                File tmpImageStoredFolder = new File(tempImageStore + File.separatorChar + username);
+                File tmpImageStoredFolder = new File(tempImageStore + File.separatorChar + folderName);
                 if (!tmpImageStoredFolder.exists()) {
                     log.debug("Creating the temporary root for the S3 assets");
                     tmpImageStoredFolder.mkdirs();
@@ -142,7 +141,7 @@ public class S3ServiceImpl implements S3Service {
                 // The temporary file where the profile image will be stored
                 File tmpProfileImageFile = new File(tmpImageStoredFolder.getAbsolutePath()
                         + File.separatorChar
-                        + PROFILE_PICTURE_FILE_NAME
+                        + fileName
                         + "."
                         + FilenameUtils.getExtension(uploadedFile.getOriginalFilename()));
 
@@ -154,7 +153,7 @@ public class S3ServiceImpl implements S3Service {
                     stream.write(bytes);
                 }
 
-                profileImageUrl = this.storeProfileImageToS3(tmpProfileImageFile, username);
+                profileImageUrl = this.storeImageToS3(tmpProfileImageFile, folderName, fileName);
 
                 // Clean up the temporary folder
                 tmpProfileImageFile.delete();
@@ -202,7 +201,7 @@ public class S3ServiceImpl implements S3Service {
      *
      * @throws S3Exception If the resource file does not exist
      */
-    private String storeProfileImageToS3(File resource, String username) {
+    private String storeImageToS3(File resource, String folderName, String fileName) {
 
         String resourceUrl = null;
 
@@ -223,7 +222,7 @@ public class S3ServiceImpl implements S3Service {
             AccessControlList acl = new AccessControlList();
             acl.grantPermission(GroupGrantee.AllUsers, Permission.Read);
 
-            String key = username + "/" + PROFILE_PICTURE_FILE_NAME + "." + FilenameUtils.getExtension(resource.getName());
+            String key = folderName + "/" + fileName + "." + FilenameUtils.getExtension(resource.getName());
 
             try {
                 s3client.putObject(new PutObjectRequest(bucketName, key, resource).withAccessControlList(acl));

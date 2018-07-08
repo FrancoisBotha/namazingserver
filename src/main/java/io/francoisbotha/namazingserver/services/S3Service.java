@@ -6,5 +6,5 @@ public interface S3Service {
     public void downloadFile(String keyName);
     public void uploadFile(String keyName, String uploadFilePath);
     public void deleteFile(String keyName);
-    public String storeProfileImage(MultipartFile uploadedFile, String username);
+    public String storeImage(MultipartFile uploadedFile, String folderName, String fileName);
 }

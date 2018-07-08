@@ -12,28 +12,29 @@
 
     <div class="row mt-2">
         <div class="col-md-4">
-            <h4 class="display-7 text-left" th:text="'Specials for Vendor: ' + ${vendor.vendorName}">Vendor: </h4>
+            <h4 class="display-7 text-left" th:text="'Special for Vendor: ' + ${vendor.vendorName}">Vendor: </h4>
         </div>
     </div>
 
     <a th:href="@{|/admin/vendor/view/${vendor.id}|}" class="btn btn-outline-dark btn-sm mt-0" role="button">Back</a>
 
-    <div class="mt-3"> <a th:href="@{/admin/special/new}">New Special</a></div>
+    <div class="mt-3"> <a th:href="@{|/admin/special/${vendor.id}/new|}">New Special</a></div>
     <div class="row">
         <div class="col-md-8">
             <table class="table table-striped mt-2">
                 <thead class="thead-dark">
                 <tr scope="row" class="table-dark">
                     <th scope="col" class="table-dark"></th>
-                    <th scope="col" class="table-dark">Vendor No</th>
-                    <th scope="col" class="table-dark">Vendor Cde</th>
-                    <th scope="col" class="table-dark">Vendor Name</th>
+                    <th scope="col" class="table-dark">No</th>
+                    <th scope="col" class="table-dark">Name</th>
                     <th scope="col" class="table-dark"></th>
                     <th scope="col" class="table-dark"></th>
                 </tr>
                 </thead>
                 <tbody>
-
+                <tr th:each="special : ${specials}">
+                    <td th:replace="fragments/specialtablerow :: specialtablerow"></td>
+                </tr>
                 </tbody>
             </table>
         </div>

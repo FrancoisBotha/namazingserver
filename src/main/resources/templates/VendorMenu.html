@@ -18,22 +18,23 @@
 
     <a th:href="@{|/admin/vendor/view/${vendor.id}|}" class="btn btn-outline-dark btn-sm mt-0" role="button">Back</a>
 
-    <div class="mt-3"> <a th:href="@{/admin/menu/new}">New Menu Entry</a></div>
+    <div class="mt-3"> <a th:href="@{|/admin/menu/${vendor.id}/new|}">New Menu Entry</a></div>
     <div class="row">
         <div class="col-md-8">
             <table class="table table-striped mt-2">
                 <thead class="thead-dark">
                 <tr scope="row" class="table-dark">
                     <th scope="col" class="table-dark"></th>
-                    <th scope="col" class="table-dark">Vendor No</th>
-                    <th scope="col" class="table-dark">Vendor Cde</th>
-                    <th scope="col" class="table-dark">Vendor Name</th>
+                    <th scope="col" class="table-dark">No</th>
+                    <th scope="col" class="table-dark">Name</th>
                     <th scope="col" class="table-dark"></th>
                     <th scope="col" class="table-dark"></th>
                 </tr>
                 </thead>
                 <tbody>
-
+                <tr th:each="menu : ${menus}">
+                    <td th:replace="fragments/menutablerow :: menutablerow"></td>
+                </tr>
                 </tbody>
             </table>
         </div>

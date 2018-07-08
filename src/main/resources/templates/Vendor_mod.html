@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments/header :: header"></head>
+
+<body>
+
+<div class="container">
+
+    <div th:include="fragments/navbar:: navbar"></div>
+
+    <div class="row mt-2">
+        <div class="col-md-12">
+            <div>
+                <h4 class="display-7 text-left" th:text="'Vendor: ' + ${vendor.vendorName}">Vendor: </h4>
+            </div>
+            <div>
+                <h5 class="display-8">Modify</h5>
+                <hr>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-md-5">
+            <div class="well">
+                <div class="text-left">
+                    <form id="newvendorform"
+                          th:action="@{|/admin/vendor/mod/${vendor.id}|}"
+                          th:object="${vendor}"
+                          method="post"
+                          enctype="multipart/form-data"
+                    >
+
+                        <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                            <p th:text="#{form.newvendor.hasErrors}">Error Message</p>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group" th:class="${#fields.hasErrors('num')} ? 'form-group has-error' : 'form-group'">
+                                    <label for="vendorNo" th:text="#{vendor.num}">vendorCde</label>
+                                    <input type="text" id="num" name="vendorNo" class="form-control" th:field="*{num}" th:errorclass="is-invalid"/>
+                                    <div class="invalid-feedback"  th:if="${#fields.hasErrors('num')}">
+                                        <ul >
+                                            <li  th:each="err : ${#fields.errors('num')}" th:text="${err}" />
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group" th:class="${#fields.hasErrors('vendorCde')} ? 'form-group has-error' : 'form-group'">
+                                    <label for="vendorCde" th:text="#{vendor.vendorCde}">vendorCde</label>
+                                    <input type="text" id="vendorCde" name="vendorCde" class="form-control" th:field="*{vendorCde}" th:errorclass="is-invalid"/>
+                                    <div class="invalid-feedback"  th:if="${#fields.hasErrors('vendorCde')}">
+                                        <ul >
+                                            <li  th:each="err : ${#fields.errors('vendorCde')}" th:text="${err}" />
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="form-group" th:class="${#fields.hasErrors('vendorName')} ? 'form-group has-error' : 'form-group'">
+                                    <label for="vendorName" th:text="#{vendor.vendorName}">vendorCde</label>
+                                    <input type="text" id="vendorName" name="vendorName" class="form-control" th:field="*{vendorName}" th:errorclass="is-invalid"/>
+                                    <div class="invalid-feedback"  th:if="${#fields.hasErrors('vendorName')}">
+                                        <ul>
+                                            <li  th:each="err : ${#fields.errors('vendorName')}" th:text="${err}" />
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="file" th:text="#{vendor.vendorLogoUrl}">File</label>
+                            <input type="file" id="file" name="file" class="form-control"/>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success">Save</button>
+                            <a type="button" class="btn btn-primary" th:href="@{|/admin/vendor/view/${vendor.id}|}">Cancel</a>
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+</html>

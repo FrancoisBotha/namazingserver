@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<tr th:fragment="specialtablerow">
+    <td><img align="left"
+             height="40"
+             width="40"
+             th:src="${special.specialImgUrl}"
+             class="img-circle"/></td>
+    <td th:text="${special.specialNo}">No</td>
+    <td th:text="${special.specialName}">Name</td>
+    <td><a th:href="@{|/admin/special/${vendor.id}/view/${special.id}|}" class="btn btn-outline-dark btn-sm" role="button">View</a></td>
+    <td><form id="delvendorform" th:action="@{|/admin/special/${vendor.id}/delete/${special.id}|}" th:object="${special}" method="POST">
+        <input type="hidden" name="_method" value="DELETE"/>
+        <input type="submit" class="btn btn-outline-danger btn-sm" value="Delete">
+    </form></td>
+</tr>
+
+</body>
+
+</html>

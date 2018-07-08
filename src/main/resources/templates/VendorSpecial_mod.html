@@ -11,13 +11,25 @@
     <div th:include="fragments/navbar:: navbar"></div>
 
     <div class="row mt-2">
+        <div class="col-md-12">
+            <div>
+                <h4 class="display-7 text-left" th:text="'Vendor: ' + ${vendor.vendorName}">Vendor: </h4>
+                <h5 class="display-7 text-left" th:text="'Special: ' + ${special.specialName}">Special: </h5>
+            </div>
+            <div>
+                <h5 class="display-8">Modify</h5>
+                <hr>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-2">
         <div class="col-md-9">
             <div class="well">
                 <div class="text-left">
-                    <h4 class="display-6">Create new special entry</h4>
 
                     <form id="newspecialform"
-                          th:action="@{|/admin/special/${vendor.id}/new|}"
+                          th:action="@{|/admin/special/${vendor.id}/mod/${special.id}|}"
                           th:object="${special}"
                           method="post"
                           enctype="multipart/form-data"

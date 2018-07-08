@@ -13,7 +13,7 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @NoArgsConstructor
-@DynamoDBTable(tableName = "Special")
+@DynamoDBTable(tableName = "namazing_Special")
 public class Special{
 
     private String id;

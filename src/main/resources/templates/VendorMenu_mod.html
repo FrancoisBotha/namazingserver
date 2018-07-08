@@ -11,13 +11,25 @@
     <div th:include="fragments/navbar:: navbar"></div>
 
     <div class="row mt-2">
+        <div class="col-md-12">
+            <div>
+                <h4 class="display-7 text-left" th:text="'Vendor: ' + ${vendor.vendorName}">Vendor: </h4>
+                <h5 class="display-7 text-left" th:text="'Menu: ' + ${menu.menuName}">Menu: </h5>
+            </div>
+            <div>
+                <h5 class="display-8">Modify</h5>
+                <hr>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mt-2">
         <div class="col-md-9">
             <div class="well">
                 <div class="text-left">
-                    <h4 class="display-6">Create new menu entry</h4>
 
                     <form id="newmenuform"
-                          th:action="@{|/admin/menu/${vendor.id}/new|}"
+                          th:action="@{|/admin/menu/${vendor.id}/mod/${menu.id}|}"
                           th:object="${menu}"
                           method="post"
                           enctype="multipart/form-data"

@@ -12,18 +12,19 @@
 
     <div class="row mt-2">
         <div class="col-md-4">
-            <h4 class="display-7 text-left" th:text="'View Vendor: ' + ${vendor.vendorName}">Vendor: </h4>
+            <h4 class="display-7 text-left" th:text="'Vendor: ' + ${vendor.vendorName}">Vendor: </h4>
+            <h5 class="display-7 text-left" th:text="'Special: ' + ${special.specialName}">Vendor: </h5>
         </div>
     </div>
 
-    <a th:href="@{/admin/vendor}" class="btn btn-outline-dark btn-sm mt-0" role="button">Back</a>
+    <a th:href="@{|/admin/special/${vendor.id}|}" class="btn btn-outline-dark btn-sm mt-0" role="button">Back</a>
 
     <div class="row">
         <div class="col-md-8 mt-2">
             <img align="left"
                  height="60"
                  width="120"
-                 th:src="${vendor.vendorLogoUrl}"
+                 th:src="${special.specialImgUrl}"
                  class="img-circle"/>
         </div>
     </div>
@@ -33,17 +34,17 @@
             <div class="card card-body bg-light mt-2 mb-2">
                 <div class="row">
                     <div class="col-md-4">
-                        <h6 class="display-7 text-right">Vendor:</h6>
+                        <h6 class="display-7 text-right">Name:</h6>
                     </div>
-                    <div class="col-md-4 display-7" th:text="${vendor.vendorName}">
+                    <div class="col-md-4 display-7" th:text="${special.specialName}">
                         Text
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-4">
-                        <h6 class="display-7 text-right">Code:</h6>
+                        <h6 class="display-7 text-right">Description:</h6>
                     </div>
-                    <div class="col-md-4" th:text="${vendor.vendorCde}">
+                    <div class="col-md-4" th:text="${special.specialDesc}">
                         Text
                     </div>
                 </div>
@@ -51,14 +52,12 @@
                     <div class="col-md-4">
                         <h6 class="display-7 text-right">No:</h6>
                     </div>
-                    <div class="col-md-4" th:text="${vendor.num}">
+                    <div class="col-md-4" th:text="${special.specialNo}">
                         Text
                     </div>
                 </div>
             </div>
-            <a th:href="@{|/admin/vendor/mod/${vendor.id}|}" class="btn btn-outline-dark btn-sm mt-0" role="button">Modify</a>
-            <a th:href="@{|/admin/menu/${vendor.id}|}" class="btn btn-outline-dark btn-sm mt-0" role="button">Menu</a>
-            <a th:href="@{|/admin/special/${vendor.id}|}" class="btn btn-outline-dark btn-sm mt-0" role="button">Specials</a>
+            <a th:href="@{|/admin/special/${vendor.id}/mod/${special.id}|}" class="btn btn-outline-dark btn-sm mt-0" role="button">Modify</a>
         </div>
 
     </div>

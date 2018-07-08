@@ -14,7 +14,7 @@ import lombok.*;
 public class VendorDto {
 
     private String id;
-    private Integer vendorNo;
+    private Integer num;
 
     @NotBlank
     @Size(min = 6, max = 6)

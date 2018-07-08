@@ -28,12 +28,12 @@
 
                        <div class="row">
                            <div class="col-md-3">
-                               <div class="form-group" th:class="${#fields.hasErrors('vendorNo')} ? 'form-group has-error' : 'form-group'">
-                                   <label for="vendorNo" th:text="#{vendor.vendorNo}">vendorCde</label>
-                                   <input type="text" id="vendorNo" name="vendorNo" class="form-control" th:field="*{vendorNo}" th:errorclass="is-invalid"/>
-                                   <div class="invalid-feedback"  th:if="${#fields.hasErrors('vendorNo')}">
+                               <div class="form-group" th:class="${#fields.hasErrors('num')} ? 'form-group has-error' : 'form-group'">
+                                   <label for="vendorNo" th:text="#{vendor.num}">vendorCde</label>
+                                   <input type="text" id="num" name="vendorNo" class="form-control" th:field="*{num}" th:errorclass="is-invalid"/>
+                                   <div class="invalid-feedback"  th:if="${#fields.hasErrors('num')}">
                                        <ul >
-                                           <li  th:each="err : ${#fields.errors('vendorNo')}" th:text="${err}" />
+                                           <li  th:each="err : ${#fields.errors('num')}" th:text="${err}" />
                                        </ul>
                                    </div>
                                </div>

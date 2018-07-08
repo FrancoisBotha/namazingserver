@@ -13,12 +13,12 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @NoArgsConstructor
-@DynamoDBTable(tableName = "Vendor")
+@DynamoDBTable(tableName = "namazing_Vendor")
 public class Vendor {
 
     private String id;
     private String vendorCde;
-    private Integer vendorNo;
+    private Integer num;
     private String vendorName;
     private String vendorLogoUrl;
 
@@ -29,8 +29,8 @@ public class Vendor {
     }
 
     @DynamoDBAttribute
-    public Integer getVendorNo() {
-        return vendorNo;
+    public Integer getNum() {
+        return num;
     }
 
     @DynamoDBAttribute
