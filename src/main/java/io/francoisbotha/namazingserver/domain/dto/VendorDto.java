@@ -23,6 +23,5 @@ public class VendorDto {
     @Size(min = 3, max = 50)
     private String vendorName;
 
-    private String vendorLogoUrl;
 
 }

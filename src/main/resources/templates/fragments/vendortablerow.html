@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+    <tr th:fragment="vendortablerow">
+        <td><img align="left"
+                 height="40"
+                 width="40"
+                 th:src="${vendor.vendorLogoUrl}"
+                 class="img-circle"/></td>
+        <td th:text="${vendor.vendorNo}">Vendor No</td>
+        <td th:text="${vendor.vendorCde}">Vendor Cde</td>
+        <td th:text="${vendor.vendorName}">Vendor Name</td>
+        <td><a th:href="@{|/admin/vendor/view/${vendor.id}|}" class="btn btn-outline-dark btn-sm" role="button">View</a></td>
+        <td><a th:href="@{|/admin/vendor/delete/${vendor.id}|}" class="btn btn-outline-danger btn-sm" role="button">Delete</a></td>
+    </tr>
+
+
+</body>
+
+</html>

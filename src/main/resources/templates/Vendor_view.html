@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="header :: header"></head>
+
+<body>
+
+<div class="container">
+
+    <div th:include="navbar:: navbar"></div>
+    <hr></hr>
+    <br></br>
+
+    <div class="row">
+
+        <div class="col-md-5">
+
+            <div class="well">
+
+                <div class="text-left">
+
+                    <span><h4 class="display-6">Vendor:</h4></span><span th:text="${vendor.vendorName}"></span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script src="/webjars/jquery/jquery.min.js"></script>
+<script src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+
+</body>
+</html>

@@ -9,10 +9,26 @@
 <div class="container">
 
     <div th:include="navbar:: navbar"></div>
-    <br></br>
     <div th:include="menu:: menu"></div>
-    <br></br>
-    <div> <a th:href="@{/admin/vendor/new}">New</a></div>
+    <div class="mt-3"> <a th:href="@{/admin/vendor/new}">New</a></div>
+    <table class="table table-striped mt-2">
+        <thead class="thead-dark">
+            <tr scope="row" class="table-dark">
+                <th scope="col" class="table-dark"></th>
+                <th scope="col" class="table-dark">Vendor No</th>
+                <th scope="col" class="table-dark">Vendor Cde</th>
+                <th scope="col" class="table-dark">Vendor Name</th>
+                <th scope="col" class="table-dark"></th>
+                <th scope="col" class="table-dark"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="vendor : ${vendors}">
+                <td th:replace="fragments/vendortablerow :: vendortablerow"></td>
+            </tr>
+        </tbody>
+    </table>
+
 
 </div>
 

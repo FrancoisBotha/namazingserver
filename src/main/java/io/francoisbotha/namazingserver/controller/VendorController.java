@@ -10,13 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import io.francoisbotha.namazingserver.domain.dto.VendorDto;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -32,17 +30,48 @@ public class VendorController {
     private AmazonDynamoDB amazonDynamoDB;
 
     @Autowired
-    VendorRepository repository;
+    VendorRepository vendorRepository;
 
     private static final String VENDOR_VIEW_NAME = "Vendors";
     private static final String NEW_VENDOR_VIEW_NAME = "Vendor_new";
+    private static final String VIEW_VENDOR_VIEW_NAME = "Vendor_view";
 
     /* Key which identifies vendor payload in Model */
     public static final String VENDOR_MODEL_KEY = "vendor";
+    private static final String VENDORLIST_MODEL_KEY = "vendors";
+
+    @RequestMapping(value = "/admin/vendor/delete/{id}", method = RequestMethod.GET)
+    public String DeleteVendor(Model model,
+                               @PathVariable("id") String id) {
+
+        log.debug(id);
+
+        return "redirect:/admin/vendor";
+    }
+
+    @RequestMapping(value = "/admin/vendor/view/{id}", method = RequestMethod.GET)
+    public String ViewVendor(Model model,
+                               @PathVariable("id") String id) {
+
+        VendorDto vendorDto = new VendorDto();
+        vendorDto.setVendorName("Some Vendor");
+        model.addAttribute(VendorController.VENDOR_MODEL_KEY , vendorDto);
+
+        return VendorController.VIEW_VENDOR_VIEW_NAME;
+    }
 
     @RequestMapping(value = "/admin/vendor", method = RequestMethod.GET)
     public String ShowVendorPage(Model model) {
 
+        List<Vendor> vendorList = (List<Vendor>) vendorRepository.findAll();
+
+        for (Vendor vendor : vendorRepository.findAll()) {
+            log.info(vendor.toString());
+        }
+
+        log.debug(vendorList.toArray().toString());
+
+        model.addAttribute(VendorController.VENDORLIST_MODEL_KEY, vendorRepository.findAll());
         return VendorController.VENDOR_VIEW_NAME;
     }
 
@@ -63,26 +92,23 @@ public class VendorController {
             return VendorController.NEW_VENDOR_VIEW_NAME;
         }
 
-        log.debug(vendorDto.getVendorCde());
-
         Vendor vendor = new Vendor();
         vendor.setVendorCde(vendorDto.getVendorCde());
         vendor.setVendorName(vendorDto.getVendorName());
-        repository.save(vendor);
-
-        List<Vendor> result = (List<Vendor>) repository.findAll();
-
-        log.debug(result.toString());
 
         if (file != null && !file.isEmpty()) {
             log.debug("In file block");
             String vendorImageUrl = s3Service.storeProfileImage(file, vendorDto.getVendorCde());
             if (vendorImageUrl != null) {
                 log.debug("update image");
+                vendor.setVendorLogoUrl(vendorImageUrl);
             } else {
                 log.debug("Could not upload file to S3");
             }
         }
+
+        vendorRepository.save(vendor);
+
         return VendorController.VENDOR_VIEW_NAME;
     }
 
