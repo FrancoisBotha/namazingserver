@@ -1,10 +1,10 @@
 package io.francoisbotha.namazingserver.domain.dto;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import lombok.*;
-import org.hibernate.validator.constraints.NotEmpty;
+
 
 @Getter
 @Setter
@@ -13,14 +13,16 @@ import org.hibernate.validator.constraints.NotEmpty;
 @NoArgsConstructor
 public class VendorDto {
 
-    @NotNull
-    @NotEmpty
+    private Integer vendorNo;
+
+    @NotBlank
     @Size(min = 6, max = 6)
     private String vendorCde;
 
-    @NotNull
-    @NotEmpty
+    @NotBlank
     @Size(min = 3, max = 50)
     private String vendorName;
+
+    private String vendorLogoUrl;
 
 }

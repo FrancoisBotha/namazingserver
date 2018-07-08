@@ -29,18 +29,50 @@
                          enctype="multipart/form-data"
                          >
 
+                        <div th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+                           <p th:text="#{form.newvendor.hasErrors}">Error Message</p>
+                        </div>
+
                        <div class="row">
-                           <div class="col-md-4">
-                               <div class="form-group">
-                                   <label for="vendorCde">Vendor Code</label>
-                                   <input type="text" id="vendorCde" name="vendorCde" class="form-control"/>
+                           <div class="col-md-3">
+                               <div class="form-group" th:class="${#fields.hasErrors('vendorNo')} ? 'form-group has-error' : 'form-group'">
+                                   <label for="vendorNo" th:text="#{vendor.vendorNo}">vendorCde</label>
+                                   <input type="text" id="vendorNo" name="vendorNo" class="form-control" th:field="*{vendorNo}" th:errorclass="is-invalid"/>
+                                   <div class="invalid-feedback"  th:if="${#fields.hasErrors('vendorNo')}">
+                                       <ul >
+                                           <li  th:each="err : ${#fields.errors('vendorNo')}" th:text="${err}" />
+                                       </ul>
+                                   </div>
                                </div>
                            </div>
                        </div>
 
-                       <div class="form-group">
-                           <label for="vendorName">Vendor Name</label>
-                           <input type="text" id="vendorName" name="vendorName" class="form-control"/>
+                        <div class="row">
+                           <div class="col-md-6">
+                               <div class="form-group" th:class="${#fields.hasErrors('vendorCde')} ? 'form-group has-error' : 'form-group'">
+                                   <label for="vendorCde" th:text="#{vendor.vendorCde}">vendorCde</label>
+                                   <input type="text" id="vendorCde" name="vendorCde" class="form-control" th:field="*{vendorCde}" th:errorclass="is-invalid"/>
+                                   <div class="invalid-feedback"  th:if="${#fields.hasErrors('vendorCde')}">
+                                       <ul >
+                                           <li  th:each="err : ${#fields.errors('vendorCde')}" th:text="${err}" />
+                                       </ul>
+                                   </div>
+                               </div>
+                           </div>
+                        </div>
+
+                       <div class="row">
+                           <div class="col-md-10">
+                               <div class="form-group" th:class="${#fields.hasErrors('vendorName')} ? 'form-group has-error' : 'form-group'">
+                                   <label for="vendorName" th:text="#{vendor.vendorName}">vendorCde</label>
+                                   <input type="text" id="vendorName" name="vendorName" class="form-control" th:field="*{vendorName}" th:errorclass="is-invalid"/>
+                                   <div class="invalid-feedback"  th:if="${#fields.hasErrors('vendorName')}">
+                                       <ul>
+                                           <li  th:each="err : ${#fields.errors('vendorName')}" th:text="${err}" />
+                                       </ul>
+                                   </div>
+                               </div>
+                           </div>
                        </div>
 
                        <div class="form-group">

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -55,8 +56,12 @@ public class VendorController {
 
     @RequestMapping(value = "/admin/vendor/new", method = RequestMethod.POST)
     public String VendorPost(@RequestParam(name = "file", required = false) MultipartFile file,
-                             @ModelAttribute(VENDOR_MODEL_KEY) @Valid VendorDto vendorDto,
-                             ModelMap model) {
+                             @ModelAttribute(VENDOR_MODEL_KEY) @Valid VendorDto vendorDto
+                             , BindingResult bindingResult, ModelMap model) {
+
+        if (bindingResult.hasErrors()) {
+            return VendorController.NEW_VENDOR_VIEW_NAME;
+        }
 
         log.debug(vendorDto.getVendorCde());
 
