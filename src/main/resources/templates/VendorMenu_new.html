@@ -48,7 +48,7 @@
                                     <input type="text" id="menuName" name="menuName" class="form-control" th:field="*{menuName}" th:errorclass="is-invalid"/>
                                     <div class="invalid-feedback"  th:if="${#fields.hasErrors('menuName')}">
                                         <ul>
-                                            <li  th:each="err : ${#fields.errors('vendorName')}" th:text="${err}" />
+                                            <li  th:each="err : ${#fields.errors('menuName')}" th:text="${err}" />
                                         </ul>
                                     </div>
                                 </div>

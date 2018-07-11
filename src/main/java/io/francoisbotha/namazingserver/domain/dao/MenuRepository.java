@@ -9,4 +9,5 @@ import java.util.List;
 @EnableScan
 public interface MenuRepository extends CrudRepository<Menu, String> {
     List<Menu> findAll();
+    List<Menu> findAllByVendorId(String id);
 }

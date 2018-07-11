@@ -1,5 +1,6 @@
 package io.francoisbotha.namazingserver.config;
 
+import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
@@ -15,8 +16,8 @@ import org.springframework.context.annotation.Configuration;
         (basePackages = "io.francoisbotha.namazingserver.domain.dao")
 public class DynamoDBConfig {
 
-    @Value("${amazon.dynamodb.endpoint}")
-    private String amazonDynamoDBEndpoint;
+//    @Value("${amazon.dynamodb.endpoint}")
+//    private String amazonDynamoDBEndpoint;
 
     @Value("${aws.s3.profile}")
     private String awsProfileName;
@@ -27,8 +28,12 @@ public class DynamoDBConfig {
     @Bean
     public AmazonDynamoDB amazonDynamoDB() {
 
-        AmazonDynamoDB dynamoDB = AmazonDynamoDBClientBuilder.standard().withEndpointConfiguration(
-                new AwsClientBuilder.EndpointConfiguration(amazonDynamoDBEndpoint, region))
+//        AmazonDynamoDB dynamoDB = AmazonDynamoDBClientBuilder.standard().withEndpointConfiguration(
+//                new AwsClientBuilder.EndpointConfiguration(amazonDynamoDBEndpoint, region))
+//                .build();
+
+        AmazonDynamoDB dynamoDB = AmazonDynamoDBClientBuilder.standard()
+                .withCredentials(new ProfileCredentialsProvider(awsProfileName))
                 .build();
 
         return dynamoDB;

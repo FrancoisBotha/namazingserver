@@ -9,4 +9,5 @@ import java.util.List;
 @EnableScan
 public interface SpecialRepository extends CrudRepository<Special, String> {
     List<Special> findAll();
+    List<Special> findAllByVendorId(String id);
 }

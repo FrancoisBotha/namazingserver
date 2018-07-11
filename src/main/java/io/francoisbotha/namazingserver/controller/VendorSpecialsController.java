@@ -33,15 +33,15 @@ public class VendorSpecialsController {
     @Autowired
     SpecialRepository specialRepository;
 
-    private static final String MENU_VIEW_NAME = "VendorSpecial";
-    private static final String NEW_MENU_VIEW_NAME = "VendorSpecial_new";
-    private static final String VIEW_MENU_VIEW_NAME = "VendorSpecial_view";
-    private static final String MOD_MENU_VIEW_NAME = "VendorSpecial_mod";
+    private static final String SPECIAL_VIEW_NAME = "VendorSpecial";
+    private static final String NEW_SPECIAL_VIEW_NAME = "VendorSpecial_new";
+    private static final String VIEW_SPECIAL_VIEW_NAME = "VendorSpecial_view";
+    private static final String MOD_SPECIAL_VIEW_NAME = "VendorSpecial_mod";
 
     /* Key which identifies data models */
     public static final String VENDOR_MODEL_KEY = "vendor";
-    public static final String MENU_MODEL_KEY = "special";
-    private static final String MENULIST_MODEL_KEY = "specials";
+    public static final String SPECIAL_MODEL_KEY = "special";
+    private static final String SPECIALLIST_MODEL_KEY = "specials";
 
     @RequestMapping(value = "/admin/special/{id}", method = RequestMethod.GET)
     public String ViewSpecial(Model model,
@@ -55,13 +55,13 @@ public class VendorSpecialsController {
             List specials = Utility.getSortedSpecials(specialsIt);
 
             model.addAttribute(this.VENDOR_MODEL_KEY , Utility.getVendorDto(vendorOptional.get()));
-            model.addAttribute(this.MENULIST_MODEL_KEY, specials);
+            model.addAttribute(this.SPECIALLIST_MODEL_KEY, specials);
 
-            return this.MENU_VIEW_NAME;
+            return this.SPECIAL_VIEW_NAME;
 
         }
 
-        return this.MENU_VIEW_NAME;
+        return this.SPECIAL_VIEW_NAME;
 
     }
 
@@ -76,13 +76,13 @@ public class VendorSpecialsController {
                 && specialOptional.isPresent()){
 
             model.addAttribute(this.VENDOR_MODEL_KEY , Utility.getVendorDto(vendorOptional.get()));
-            model.addAttribute(this.MENU_MODEL_KEY , Utility.getSpecialDto(specialOptional.get()));
+            model.addAttribute(this.SPECIAL_MODEL_KEY , Utility.getSpecialDto(specialOptional.get()));
 
-            return this.VIEW_MENU_VIEW_NAME;
+            return this.VIEW_SPECIAL_VIEW_NAME;
 
         }
 
-        return this.VIEW_MENU_VIEW_NAME;
+        return this.VIEW_SPECIAL_VIEW_NAME;
     }
 
     @RequestMapping(value = "/admin/special/{id}/new", method = RequestMethod.GET)
@@ -94,33 +94,36 @@ public class VendorSpecialsController {
             model.addAttribute(this.VENDOR_MODEL_KEY , Utility.getVendorDto(vendorOptional.get()));
 
             SpecialDto specialDto = new SpecialDto();
-            model.addAttribute(this.MENU_MODEL_KEY , specialDto);
-            return this.NEW_MENU_VIEW_NAME;
+            model.addAttribute(this.SPECIAL_MODEL_KEY , specialDto);
+            return this.NEW_SPECIAL_VIEW_NAME;
 
         }
 
-        return this.NEW_MENU_VIEW_NAME;
+        return this.NEW_SPECIAL_VIEW_NAME;
 
     }
 
     @RequestMapping(value = "/admin/special/{id}/new", method = RequestMethod.POST)
     public String AdminModPost(@RequestParam(name = "file", required = false) MultipartFile file,
-                               @ModelAttribute(MENU_MODEL_KEY) @Valid SpecialDto specialDto
+                               @ModelAttribute(SPECIAL_MODEL_KEY) @Valid SpecialDto specialDto
             , BindingResult bindingResult, ModelMap model, @PathVariable("id") String id) {
 
-        if (bindingResult.hasErrors()) {
-            return this.NEW_MENU_VIEW_NAME;
-        }
 
         //Get Vendor
         Optional<Vendor> vendorOptional = vendorRepository.findById(id);
-        Optional<Special> specialOptional = specialRepository.findById(id);
 
         if (vendorOptional.isPresent() ){
 
             Vendor vendor = vendorOptional.get();
+
+            if (bindingResult.hasErrors()) {
+                model.addAttribute(this.VENDOR_MODEL_KEY , vendor);
+                return this.NEW_SPECIAL_VIEW_NAME;
+            }
+
             Special special = new Special();
 
+            special.setVendorId(vendor.getId());
             special.setSpecialName(specialDto.getSpecialName());
             special.setSpecialNo(specialDto.getSpecialNo());
             special.setSpecialDesc(specialDto.getSpecialDesc());
@@ -154,24 +157,24 @@ public class VendorSpecialsController {
                 && specialOptional.isPresent()){
 
             model.addAttribute(this.VENDOR_MODEL_KEY , Utility.getVendorDto(vendorOptional.get()));
-            model.addAttribute(this.MENU_MODEL_KEY , Utility.getSpecialDto(specialOptional.get()));
+            model.addAttribute(this.SPECIAL_MODEL_KEY , Utility.getSpecialDto(specialOptional.get()));
 
-            return this.MOD_MENU_VIEW_NAME;
+            return this.MOD_SPECIAL_VIEW_NAME;
 
         }
 
-        return this.MOD_MENU_VIEW_NAME;
+        return this.MOD_SPECIAL_VIEW_NAME;
     }
 
     @RequestMapping(value = "/admin/special/{id}/mod/{specialId}", method = RequestMethod.POST)
     public String VendorModPost(@RequestParam(name = "file", required = false) MultipartFile file,
-                                @ModelAttribute(MENU_MODEL_KEY) @Valid SpecialDto specialDto,
+                                @ModelAttribute(SPECIAL_MODEL_KEY) @Valid SpecialDto specialDto,
                                 BindingResult bindingResult, ModelMap model,
                                 @PathVariable("id") String id, @PathVariable("specialId") String specialId) {
 
         if (bindingResult.hasErrors()) {
             log.debug("ERROR");
-            return this.MOD_MENU_VIEW_NAME;
+            return this.MOD_SPECIAL_VIEW_NAME;
         }
 
         Optional<Vendor> vendorOptional = vendorRepository.findById(id);

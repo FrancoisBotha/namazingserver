@@ -50,7 +50,7 @@ public class VendorMenuController {
         Optional<Vendor> vendorOptional = vendorRepository.findById(id);
         if (vendorOptional.isPresent()){
 
-            Iterable<Menu> menusIt = menuRepository.findAll();
+            Iterable<Menu> menusIt = menuRepository.findAllByVendorId(id);
 
             List menus = Utility.getSortedMenus(menusIt);
 
@@ -108,19 +108,20 @@ public class VendorMenuController {
                                 @ModelAttribute(MENU_MODEL_KEY) @Valid MenuDto menuDto
             , BindingResult bindingResult, ModelMap model, @PathVariable("id") String id) {
 
-        if (bindingResult.hasErrors()) {
-            return this.NEW_MENU_VIEW_NAME;
-        }
-
         //Get Vendor
         Optional<Vendor> vendorOptional = vendorRepository.findById(id);
-        Optional<Menu> menuOptional = menuRepository.findById(id);
 
-        if (vendorOptional.isPresent() ){
-
+        if (vendorOptional.isPresent() ) {
             Vendor vendor = vendorOptional.get();
+
+            if (bindingResult.hasErrors()) {
+                model.addAttribute(this.VENDOR_MODEL_KEY , vendor);
+                return this.NEW_MENU_VIEW_NAME;
+            }
+
             Menu menu = new Menu();
 
+            menu.setVendorId(vendor.getId());
             menu.setMenuName(menuDto.getMenuName());
             menu.setMenuNo(menuDto.getMenuNo());
             menu.setMenuDesc(menuDto.getMenuDesc());
@@ -138,9 +139,12 @@ public class VendorMenuController {
 
             menuRepository.save(menu);
 
+            return "redirect:/admin/menu/" + id;
+
         }
 
         return "redirect:/admin/menu/" + id;
+
     }
 
     @RequestMapping(value = "/admin/menu/{id}/mod/{menuId}", method = RequestMethod.GET)
