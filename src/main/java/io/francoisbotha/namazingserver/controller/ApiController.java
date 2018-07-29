@@ -41,7 +41,7 @@ public class ApiController {
     }
 
     @RequestMapping(value = "/api/vendor/menu/{id}", method = RequestMethod.GET)
-    public List getVendorMenu (Model model, @PathVariable("id") String id ) {
+    public List getVendorMenuId (Model model, @PathVariable("id") String id ) {
 
         Iterable<Menu> menusIt = menuRepository.findAllByVendorId(id);
 
@@ -51,10 +51,32 @@ public class ApiController {
 
     }
 
+    @RequestMapping(value = "/api/vendor/menu", method = RequestMethod.GET)
+    public List getVendorMenu (Model model) {
+
+        Iterable<Menu> menusIt = menuRepository.findAll();
+
+        List menus = Utility.getSortedMenus(menusIt);
+
+        return menus;
+
+    }
+
     @RequestMapping(value = "/api/vendor/special/{id}", method = RequestMethod.GET)
-    public List getVendorSpecials (Model model, @PathVariable("id") String id ) {
+    public List getVendorSpecialsId (Model model, @PathVariable("id") String id ) {
 
         Iterable<Special> specialsIt = specialRepository.findAllByVendorId(id);
+
+        List special = Utility.getSortedSpecials(specialsIt);
+
+        return special;
+
+    }
+
+    @RequestMapping(value = "/api/vendor/special", method = RequestMethod.GET)
+    public List getVendorSpecials (Model model) {
+
+        Iterable<Special> specialsIt = specialRepository.findAll();
 
         List special = Utility.getSortedSpecials(specialsIt);
 

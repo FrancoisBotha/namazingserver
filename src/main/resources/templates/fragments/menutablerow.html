@@ -5,13 +5,20 @@
 <body>
 
 <tr th:fragment="menutablerow">
-    <td><img align="left"
-             height="40"
-             width="40"
-             th:src="${menu.menuImgUrl}"
-             class="img-circle"/></td>
+    <div th:if="${menu.menuImgUrl}">
+        <td><img align="left"
+                 height="40"
+                 width="40"
+                 th:src="${menu.menuImgUrl}"
+                 class="img-circle"/></td>
+    </div>
+    <div th:unless="${menu.menuImgUrl}" >
+        <td></td>
+    </div>
+
     <td th:text="${menu.menuNo}">No</td>
     <td th:text="${menu.menuName}">Name</td>
+    <td th:text="${menu.menuAmt}">Amt</td>
     <td><a th:href="@{|/admin/menu/${vendor.id}/view/${menu.id}|}" class="btn btn-outline-dark btn-sm" role="button">View</a></td>
     <td><form id="delvendorform" th:action="@{|/admin/menu/${vendor.id}/delete/${menu.id}|}" th:object="${menu}" method="POST">
         <input type="hidden" name="_method" value="DELETE"/>

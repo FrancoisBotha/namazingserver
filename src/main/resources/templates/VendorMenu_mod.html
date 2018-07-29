@@ -81,6 +81,20 @@
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group" th:class="${#fields.hasErrors('menuAmt')} ? 'form-group has-error' : 'form-group'">
+                                    <label for="menuAmt" th:text="#{menu.menuAmt}">menuAmt</label>
+                                    <input type="text" id="menuAmt" name="menuAmt" class="form-control" th:field="*{menuAmt}" th:errorclass="is-invalid"/>
+                                    <div class="invalid-feedback"  th:if="${#fields.hasErrors('menuAmt')}">
+                                        <ul >
+                                            <li  th:each="err : ${#fields.errors('menuAmt')}" th:text="${err}" />
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label for="file" th:text="#{menu.menuImgUrl}">File</label>
                             <input type="file" id="file" name="file" class="form-control"/>

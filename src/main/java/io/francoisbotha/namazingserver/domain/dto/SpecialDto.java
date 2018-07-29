@@ -23,4 +23,6 @@ public class SpecialDto {
     private String specialImgUrl;
 
     private String specialDesc;
+
+    private Double specialAmt;
 }

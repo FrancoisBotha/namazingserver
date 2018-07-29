@@ -92,10 +92,8 @@ public class VendorController {
         vendor.setNum(vendorDto.getNum());
 
         if (file != null && !file.isEmpty()) {
-            log.debug("In file block");
             String vendorImageUrl = s3Service.storeImage(file, vendorDto.getVendorCde(), "vendorLogo");
             if (vendorImageUrl != null) {
-                log.debug("update image");
                 vendor.setVendorLogoUrl(vendorImageUrl);
             } else {
                 log.debug("Could not upload file to S3");
@@ -145,7 +143,6 @@ public class VendorController {
             vendor.setNum(vendorDto.getNum());
 
             if (file != null && !file.isEmpty()) {
-                log.debug("In file block");
                 String vendorImageUrl = s3Service.storeImage(file, vendorDto.getVendorCde(), "vendorLogo");
                 if (vendorImageUrl != null) {
                     log.debug("update image");

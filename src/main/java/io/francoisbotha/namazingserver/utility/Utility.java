@@ -79,6 +79,7 @@ public class Utility {
         menuDto.setMenuName(menu.getMenuName());
         menuDto.setMenuImgUrl(menu.getMenuImgUrl());
         menuDto.setMenuDesc(menu.getMenuDesc());
+        menuDto.setMenuAmt(menu.getMenuAmt());
 
         return menuDto;
 

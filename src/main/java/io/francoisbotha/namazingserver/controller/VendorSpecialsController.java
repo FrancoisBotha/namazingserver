@@ -8,6 +8,7 @@ import io.francoisbotha.namazingserver.domain.model.Vendor;
 import io.francoisbotha.namazingserver.services.S3Service;
 import io.francoisbotha.namazingserver.utility.Utility;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,7 +51,7 @@ public class VendorSpecialsController {
         Optional<Vendor> vendorOptional = vendorRepository.findById(id);
         if (vendorOptional.isPresent()){
 
-            Iterable<Special> specialsIt = specialRepository.findAll();
+            Iterable<Special> specialsIt = specialRepository.findAllByVendorId(id);
 
             List specials = Utility.getSortedSpecials(specialsIt);
 
@@ -130,9 +131,8 @@ public class VendorSpecialsController {
 
             if (file != null && !file.isEmpty()) {
                 log.debug("In file block");
-                String specialImageUrl = s3Service.storeImage(file, vendor.getVendorCde(), "specialLogo");
+                String specialImageUrl = s3Service.storeImage(file, vendor.getVendorCde(), FilenameUtils.getBaseName(file.getOriginalFilename()));
                 if (specialImageUrl != null) {
-                    log.debug("update image");
                     special.setSpecialImgUrl(specialImageUrl);
                 } else {
                     log.debug("Could not upload file to S3");
@@ -192,10 +192,10 @@ public class VendorSpecialsController {
 
             if (file != null && !file.isEmpty()) {
                 log.debug("In file block");
-                String vendorImageUrl = s3Service.storeImage(file, vendor.getVendorCde(), special.getSpecialName());
-                if (vendorImageUrl != null) {
+                String specialImageUrl = s3Service.storeImage(file, vendor.getVendorCde(), FilenameUtils.getBaseName(file.getOriginalFilename()));
+                if (specialImageUrl != null) {
                     log.debug("update image");
-                    vendor.setVendorLogoUrl(vendorImageUrl);
+                    special.setSpecialImgUrl(specialImageUrl);
                 } else {
                     log.debug("Could not upload file to S3");
                 }

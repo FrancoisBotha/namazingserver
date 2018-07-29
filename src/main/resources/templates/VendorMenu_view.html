@@ -19,13 +19,15 @@
 
     <a th:href="@{|/admin/menu/${vendor.id}|}" class="btn btn-outline-dark btn-sm mt-0" role="button">Back</a>
 
-    <div class="row">
-        <div class="col-md-8 mt-2">
-            <img align="left"
-                 height="60"
-                 width="120"
-                 th:src="${menu.menuImgUrl}"
-                 class="img-circle"/>
+    <div th:if="${menu.menuImgUrl}">
+        <div class="row">
+            <div class="col-md-8 mt-2">
+                <img align="left"
+                     height="60"
+                     width="120"
+                     th:src="${menu.menuImgUrl}"
+                     class="img-circle"/>
+            </div>
         </div>
     </div>
 
@@ -45,6 +47,14 @@
                         <h6 class="display-7 text-right">Description:</h6>
                     </div>
                     <div class="col-md-4" th:text="${menu.menuDesc}">
+                        Text
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h6 class="display-7 text-right">Amount:</h6>
+                    </div>
+                    <div class="col-md-4" th:text="${menu.menuAmt}">
                         Text
                     </div>
                 </div>

@@ -8,6 +8,7 @@ import io.francoisbotha.namazingserver.domain.model.Vendor;
 import io.francoisbotha.namazingserver.services.S3Service;
 import io.francoisbotha.namazingserver.utility.Utility;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -86,7 +87,7 @@ public class VendorMenuController {
     }
 
     @RequestMapping(value = "/admin/menu/{id}/new", method = RequestMethod.GET)
-    public String ShowAdminNewPage(ModelMap model, @PathVariable("id") String id) {
+    public String ShowMenuNewPage(ModelMap model, @PathVariable("id") String id) {
 
         Optional<Vendor> vendorOptional = vendorRepository.findById(id);
         if (vendorOptional.isPresent()){
@@ -104,7 +105,7 @@ public class VendorMenuController {
     }
 
     @RequestMapping(value = "/admin/menu/{id}/new", method = RequestMethod.POST)
-    public String AdminModPost(@RequestParam(name = "file", required = false) MultipartFile file,
+    public String MenuPost(@RequestParam(name = "file", required = false) MultipartFile file,
                                 @ModelAttribute(MENU_MODEL_KEY) @Valid MenuDto menuDto
             , BindingResult bindingResult, ModelMap model, @PathVariable("id") String id) {
 
@@ -125,10 +126,11 @@ public class VendorMenuController {
             menu.setMenuName(menuDto.getMenuName());
             menu.setMenuNo(menuDto.getMenuNo());
             menu.setMenuDesc(menuDto.getMenuDesc());
+            menu.setMenuAmt(menuDto.getMenuAmt());
 
             if (file != null && !file.isEmpty()) {
                 log.debug("In file block");
-                String menuImageUrl = s3Service.storeImage(file, vendor.getVendorCde(), "menuLogo");
+                String menuImageUrl = s3Service.storeImage(file, vendor.getVendorCde(), FilenameUtils.getBaseName(file.getOriginalFilename()));
                 if (menuImageUrl != null) {
                     log.debug("update image");
                     menu.setMenuImgUrl(menuImageUrl);
@@ -190,13 +192,13 @@ public class VendorMenuController {
             menu.setMenuName(menuDto.getMenuName());
             menu.setMenuNo(menuDto.getMenuNo());
             menu.setMenuDesc(menuDto.getMenuDesc());
+            menu.setMenuAmt(menuDto.getMenuAmt());
 
             if (file != null && !file.isEmpty()) {
-                log.debug("In file block");
-                String vendorImageUrl = s3Service.storeImage(file, vendor.getVendorCde(), menu.getMenuName());
-                if (vendorImageUrl != null) {
+                String menuImageUrl = s3Service.storeImage(file, vendor.getVendorCde(), FilenameUtils.getBaseName(file.getOriginalFilename()));
+                if (menuImageUrl != null) {
                     log.debug("update image");
-                    vendor.setVendorLogoUrl(vendorImageUrl);
+                    menu.setMenuImgUrl(menuImageUrl);
                 } else {
                     log.debug("Could not upload file to S3");
                 }

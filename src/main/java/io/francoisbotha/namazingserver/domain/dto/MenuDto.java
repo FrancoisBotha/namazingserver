@@ -24,4 +24,6 @@ public class MenuDto {
 
     private String menuDesc;
 
+    private Double menuAmt;
+
 }
